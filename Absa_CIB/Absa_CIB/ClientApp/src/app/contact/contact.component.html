@@ -1,0 +1,27 @@
+<ngb-alert *ngIf="showAlert" type="info" (close)="showAlert = false">{{ successMessage }}</ngb-alert>
+<div class="card border-light mb-3" *ngIf="!isDeleted">
+  <div class="card-body">
+    <form [formGroup]="FormData">
+      <div class="form-group">
+        <label for="Firstname">First Name</label>
+        <input type="text" class="form-control" name="Firstname" placeholder="First Name"formControlName="Firstname" (keyup)="identifyChange()">
+      </div>
+      <div class="form-group">
+        <label for="Lastname">Last Name</label>
+        <input type="text" class="form-control" name="Lastname" placeholder="Last Name"formControlName="Lastname" (keyup)="identifyChange()">
+      </div>
+      <div class="form-group">
+        <label for="Phonenumber">Phone Number</label>
+        <input type="tel" class="form-control" name="Phonenumber" placeholder="Phone Number"formControlName="Phonenumber" (keyup)="identifyChange()">
+      </div>
+    </form>
+  </div>
+  <div class="card-footer">
+    <div class="mr-auto">
+      <button type="button" class="btn btn-outline-danger" (click)="deleteContact(selectedContact)" [disabled]="!FormData.valid">Delete</button>
+    </div>
+    <div class="mr-auto">
+      <button type="button" class="btn btn-outline-primary" (click)="editContact(selectedContact)" [disabled]="!isChanged">Save Changes</button>
+    </div>
+  </div>
+</div>

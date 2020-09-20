@@ -1,0 +1,8 @@
+.list-group-item:hover {
+    color: black;
+    background-color: #f8f9fa;
+}
+
+nav {
+    border-bottom: 1px solid mediumspringgreen;
+}

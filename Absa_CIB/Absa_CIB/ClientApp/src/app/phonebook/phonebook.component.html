@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <h1 class="navbar-brand">Phonebook</h1>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="form-inline navbar-nav mr-auto">
+      <input type="search" class="form-control" placeholder="Search" #searchtext (keyup)="searchContacts(searchtext.value)">
+    </form>
+    <div class="navbar-nav ml-auto">
+      <button class="btn btn-success my-2 my-sm-0" type="button" (click)="open(content)">Add</button>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <ngb-alert *ngIf="showAlert" type="info" (close)="showAlert = false">{{ successMessage }}</ngb-alert>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <p *ngIf="phonebookContacts.length === 0">There are no contacts in this phonebook yet.</p>
+      <p *ngIf="searchedContacts.length === 0 && phonebookContacts.length !== 0">No contacts match your search.</p>
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let contact of searchedContacts" (click)="setContact(contact)" class="list-group-item"><strong>{{ contact.first_name }}</strong>  {{ contact.last_name }}</li>
+      </ul>
+    </div>
+    <div class="col-md-7" *ngIf="selectedContact !== undefined">
+      <app-contact [selectedContact]="selectedContact" (loadContacts)="loadContacts()"></app-contact>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Contact</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- <app-contact></app-contact> -->
+    <div class="card border-light mb-3">
+      <div class="card-body">
+        <form [formGroup]="FormData" (ngSubmit)="saveContact()">
+          <div class="form-group">
+            <label for="Firstname">First Name</label>
+            <input type="text" class="form-control" name="Firstname" placeholder="First Name"formControlName="Firstname">
+          </div>
+          <div class="form-group">
+            <label for="Lastname">Last Name</label>
+            <input type="text" class="form-control" name="Lastname" placeholder="Last Name"formControlName="Lastname">
+          </div>
+          <div class="form-group">
+            <label for="Phonenumber">Phone Number</label>
+            <input type="tel" class="form-control" name="Phonenumber" placeholder="Phone Number"formControlName="Phonenumber">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-dark">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
